@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  #Nginx Service
+  #React
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend-observer
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "1235:1234"
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+    networks:
+      observer-network:
+        ipv4_address: 29.5.0.2
+
+#Docker Networks
+networks:
+  observer-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 29.5.0.0/16
+#Volumes
+volumes:
+  dbdatamc:
+    driver: local
